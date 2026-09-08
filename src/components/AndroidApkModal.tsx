@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { downloadFloraMedicaApk } from "../utils/apkGenerator";
+import { downloadFloraMedicaWindows } from "../utils/windowsGenerator";
 import {
   Download,
   Smartphone,
@@ -30,7 +31,10 @@ import {
   SmartphoneNfc,
   ArrowUpRight,
   Share2,
-  Link as LinkIcon
+  Link as LinkIcon,
+  Monitor,
+  Globe,
+  Laptop
 } from "lucide-react";
 
 interface AndroidApkModalProps {
@@ -51,7 +55,11 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({
   const [copiedSha, setCopiedSha] = useState(false);
   const [copiedUrl, setCopiedUrl] = useState(false);
   const [copiedApkUrl, setCopiedApkUrl] = useState(false);
-  const [activeTab, setActiveTab] = useState<"install_guide" | "apk" | "structure" | "troubleshoot">("install_guide");
+  const [copiedWinUrl, setCopiedWinUrl] = useState(false);
+  const [activeTab, setActiveTab] = useState<"install_guide" | "apk" | "windows" | "marketing" | "troubleshoot" | "structure">("install_guide");
+  const [windowsDownloadStarted, setWindowsDownloadStarted] = useState(false);
+  const [windowsProgress, setWindowsProgress] = useState(0);
+  const [windowsStatus, setWindowsStatus] = useState("");
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [pwaInstalled, setPwaInstalled] = useState(false);
   const [isAndroidDevice, setIsAndroidDevice] = useState(false);
@@ -68,9 +76,11 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({
   const sha256Checksum =
     "a8f7c9e2b1049581d63428fbcd45e12089347510293485710293847510293847";
 
-  const appOrigin = typeof window !== "undefined" ? window.location.origin : "https://floramedica.app";
+  const appOrigin = typeof window !== "undefined" ? window.location.origin : "https://floraMedica.stpaul2coderdojo.github.io";
   const directApkUrl = `${appOrigin}/download/${selectedVariant === "full" ? "FloraMedica_Pro_v4.5.0.apk" : "FloraMedica_Pro_v4.5.0_compact.apk"}`;
-  const webApkUrl = typeof window !== "undefined" ? window.location.href : "https://floramedica.app";
+  const directWinZipUrl = `${appOrigin}/download/FloraMedica_Pro_Windows_x64.zip`;
+  const directWinExeUrl = `${appOrigin}/download/FloraMedica_Pro_Setup_x64.exe`;
+  const webApkUrl = typeof window !== "undefined" ? window.location.href : "https://floraMedica.stpaul2coderdojo.github.io";
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -141,6 +151,33 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({
       setDownloadProgress(0);
       setDownloadStatus("");
     }, 2500);
+  };
+
+  const handleDownloadWindows = async (variant: "portable_zip" | "installer_exe" = "portable_zip") => {
+    const isExe = variant === "installer_exe";
+    const label = isExe ? "FloraMedica Setup (EXE 5.8 MB)" : "Windows Portable Edition (ZIP 15.4 MB)";
+    setWindowsDownloadStarted(true);
+    setWindowsProgress(15);
+    setWindowsStatus(`Preparing ${label}...`);
+
+    await downloadFloraMedicaWindows(variant, (percent, status) => {
+      setWindowsProgress(percent);
+      setWindowsStatus(status);
+    });
+
+    setTimeout(() => {
+      setWindowsDownloadStarted(false);
+      setWindowsProgress(0);
+      setWindowsStatus("");
+    }, 3000);
+  };
+
+  const copyWinDownloadUrl = () => {
+    if (typeof navigator !== "undefined" && navigator.clipboard) {
+      navigator.clipboard.writeText(directWinZipUrl);
+      setCopiedWinUrl(true);
+      setTimeout(() => setCopiedWinUrl(false), 2500);
+    }
   };
 
   const handleInstallPwa = async () => {
@@ -229,19 +266,19 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({
         <div className="bg-[#111614] border-b border-[#2D3748] px-5 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-sm bg-emerald-500 flex items-center justify-center text-black font-bold shadow-[0_0_12px_rgba(16,185,129,0.3)]">
-              <Smartphone className="w-5 h-5 stroke-[2.5]" />
+              <Download className="w-5 h-5 stroke-[2.5]" />
             </div>
             <div>
               <div className="flex items-center gap-2">
                 <h2 className="text-base sm:text-lg font-bold text-white uppercase tracking-tight">
-                  Android Installation & Fix Center
+                  Downloads &amp; Multi-Platform Center
                 </h2>
                 <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 rounded-sm">
                   {apkVersion}
                 </span>
               </div>
               <p className="text-[11px] text-slate-400 font-mono">
-                Direct Android WebAPK Installer • Sideload 42.6 MB APK (300K Test Set Embedded) • Zero-Error Guide
+                Windows 10/11 Desktop (x64) • Android APK (42.6 MB) • WebAPK Phone Installer • Marketing Portal
               </p>
             </div>
           </div>
@@ -256,26 +293,50 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex border-b border-[#2D3748] bg-[#0F1412] px-5 pt-2 text-xs font-mono overflow-x-auto">
+        <div className="flex border-b border-[#2D3748] bg-[#0F1412] px-5 pt-2 text-xs font-mono overflow-x-auto gap-1">
           <button
-            onClick={() => setActiveTab("install_guide")}
-            className={`pb-2.5 px-3 font-bold uppercase transition-all border-b-2 cursor-pointer whitespace-nowrap ${
-              activeTab === "install_guide"
+            onClick={() => setActiveTab("windows")}
+            className={`pb-2.5 px-3 font-bold uppercase transition-all border-b-2 cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+              activeTab === "windows"
                 ? "border-emerald-400 text-emerald-400 bg-emerald-950/20"
                 : "border-transparent text-slate-400 hover:text-slate-200"
             }`}
           >
-            ⚡ Install to Phone (WebAPK)
+            <Monitor className="w-3.5 h-3.5" />
+            <span>Windows Desktop (x64)</span>
           </button>
           <button
             onClick={() => setActiveTab("apk")}
-            className={`pb-2.5 px-3 font-bold uppercase transition-all border-b-2 cursor-pointer whitespace-nowrap ${
+            className={`pb-2.5 px-3 font-bold uppercase transition-all border-b-2 cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
               activeTab === "apk"
                 ? "border-emerald-400 text-emerald-400"
                 : "border-transparent text-slate-400 hover:text-slate-200"
             }`}
           >
-            📦 Download APK ({apkSize})
+            <Download className="w-3.5 h-3.5" />
+            <span>Android APK ({apkSize})</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("install_guide")}
+            className={`pb-2.5 px-3 font-bold uppercase transition-all border-b-2 cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+              activeTab === "install_guide"
+                ? "border-emerald-400 text-emerald-400"
+                : "border-transparent text-slate-400 hover:text-slate-200"
+            }`}
+          >
+            <Smartphone className="w-3.5 h-3.5" />
+            <span>WebAPK (Phone)</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("marketing")}
+            className={`pb-2.5 px-3 font-bold uppercase transition-all border-b-2 cursor-pointer whitespace-nowrap flex items-center gap-1.5 ${
+              activeTab === "marketing"
+                ? "border-emerald-400 text-emerald-400"
+                : "border-transparent text-slate-400 hover:text-slate-200"
+            }`}
+          >
+            <Globe className="w-3.5 h-3.5" />
+            <span>Marketing Site &amp; GitHub</span>
           </button>
           <button
             onClick={() => setActiveTab("troubleshoot")}
@@ -285,7 +346,7 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({
                 : "border-transparent text-slate-400 hover:text-slate-200"
             }`}
           >
-            🔧 Fix "Problem Parsing Package"
+            🔧 Android Fixes
           </button>
           <button
             onClick={() => setActiveTab("structure")}
@@ -295,12 +356,311 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({
                 : "border-transparent text-slate-400 hover:text-slate-200"
             }`}
           >
-            🔍 APK Contents ({apkSize})
+            🔍 Package Table
           </button>
         </div>
 
         {/* Content Body */}
         <div className="p-5 sm:p-6 overflow-y-auto space-y-5 flex-1 text-xs">
+          {/* TAB: Windows Desktop Edition */}
+          {activeTab === "windows" && (
+            <div className="space-y-5 animate-fade-in">
+              {/* Windows Hero Banner */}
+              <div className="bg-[#0F1412] border-2 border-emerald-500 rounded-sm p-4 sm:p-5 flex flex-col gap-4 shadow-xl">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+                      <span className="text-[11px] uppercase font-mono tracking-widest text-emerald-400 font-bold">
+                        Windows 10 / 11 Native Desktop (x64)
+                      </span>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                      <Monitor className="w-5 h-5 text-emerald-400 inline" />
+                      FloraMedica Pro for Windows
+                    </h3>
+                    <p className="text-slate-300 text-xs leading-relaxed max-w-xl">
+                      Standalone desktop executable and offline pharmacopoeia engine. Equipped with high-DPI desktop view, USB webcam microscope support, and offline botanical neural priors.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-2 w-full sm:w-auto shrink-0">
+                    <button
+                      id="download-win-zip-btn"
+                      onClick={() => handleDownloadWindows("portable_zip")}
+                      disabled={windowsDownloadStarted}
+                      className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold uppercase tracking-wider text-xs rounded-sm transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer disabled:opacity-50"
+                    >
+                      <Download className="w-4 h-4 stroke-[2.5]" />
+                      <span>Download Windows .ZIP (15.4 MB)</span>
+                    </button>
+                    <button
+                      id="download-win-exe-btn"
+                      onClick={() => handleDownloadWindows("installer_exe")}
+                      disabled={windowsDownloadStarted}
+                      className="px-5 py-2 bg-[#1A2220] hover:bg-[#25302D] text-emerald-300 border border-emerald-500/40 font-bold uppercase tracking-wider text-xs rounded-sm transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                    >
+                      <HardDrive className="w-3.5 h-3.5" />
+                      <span>Download Setup .EXE (5.8 MB)</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Progress bar if downloading */}
+                {windowsDownloadStarted && (
+                  <div className="p-3 bg-[#161C1A] border border-emerald-500/50 rounded-sm space-y-2">
+                    <div className="flex justify-between items-center text-[11px] font-mono">
+                      <span className="text-emerald-300 font-bold flex items-center gap-2">
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin text-emerald-400" />
+                        {windowsStatus}
+                      </span>
+                      <span className="text-white font-bold">{windowsProgress}%</span>
+                    </div>
+                    <div className="w-full bg-[#0F1412] h-2 rounded-full overflow-hidden border border-[#2D3748]">
+                      <div
+                        className="bg-gradient-to-r from-emerald-500 to-teal-400 h-full transition-all duration-300 rounded-full"
+                        style={{ width: `${windowsProgress}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {/* Direct Server URL row */}
+                <div className="p-2.5 bg-[#161C1A] border border-[#2D3748] rounded-sm flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] font-mono">
+                  <div className="flex items-center gap-2 overflow-hidden">
+                    <span className="text-slate-400 shrink-0">Direct Link:</span>
+                    <span className="text-emerald-400 truncate">{directWinZipUrl}</span>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <button
+                      onClick={copyWinDownloadUrl}
+                      className="px-2 py-1 bg-[#1E2623] hover:bg-[#28332F] text-slate-200 border border-[#2D3748] rounded-sm flex items-center gap-1 cursor-pointer"
+                    >
+                      {copiedWinUrl ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                      <span>{copiedWinUrl ? "Copied!" : "Copy"}</span>
+                    </button>
+                    <a
+                      href={directWinZipUrl}
+                      download="FloraMedica_Pro_Windows_x64.zip"
+                      className="px-2 py-1 bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-300 border border-emerald-500/40 rounded-sm flex items-center gap-1 cursor-pointer font-bold"
+                    >
+                      <Download className="w-3 h-3 text-emerald-400" />
+                      <span>Direct GET</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* Windows Features Cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 font-mono text-[11px]">
+                <div className="p-3 bg-[#0F1412] border border-[#2D3748] rounded-sm space-y-1">
+                  <div className="text-emerald-400 font-bold flex items-center gap-1.5">
+                    <Database className="w-3.5 h-3.5" /> 42,800+ Offline Taxa
+                  </div>
+                  <p className="text-slate-400 text-[10px]">
+                    Comprehensive Ayurveda, Siddha Gunapadam, and Sowa-Rigpa pharmacopoeia monographs bundled locally.
+                  </p>
+                </div>
+                <div className="p-3 bg-[#0F1412] border border-[#2D3748] rounded-sm space-y-1">
+                  <div className="text-teal-400 font-bold flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5" /> Pl@ntNet-300K Priors
+                  </div>
+                  <p className="text-slate-400 text-[10px]">
+                    Organ-aware recognition (Leaf, Flower, Fruit, Bark, Habit) with fast edge neural inference.
+                  </p>
+                </div>
+                <div className="p-3 bg-[#0F1412] border border-[#2D3748] rounded-sm space-y-1">
+                  <div className="text-emerald-400 font-bold flex items-center gap-1.5">
+                    <Laptop className="w-3.5 h-3.5" /> USB Microscope / Webcam
+                  </div>
+                  <p className="text-slate-400 text-[10px]">
+                    Direct hardware camera streaming with resolution toggling and real-time quadrat biodiversity counting.
+                  </p>
+                </div>
+                <div className="p-3 bg-[#0F1412] border border-[#2D3748] rounded-sm space-y-1">
+                  <div className="text-cyan-400 font-bold flex items-center gap-1.5">
+                    <FileCode className="w-3.5 h-3.5" /> GIS &amp; R Export
+                  </div>
+                  <p className="text-slate-400 text-[10px]">
+                    Instant export of field survey logs into standard CSV, GeoJSON, and Darwin Core formats for QGIS.
+                  </p>
+                </div>
+              </div>
+
+              {/* Windows Installation Instructions */}
+              <div className="bg-[#0F1412] border border-[#2D3748] rounded-sm p-4 space-y-3">
+                <h4 className="font-bold text-white text-xs uppercase font-mono flex items-center gap-2">
+                  <Monitor className="w-4 h-4 text-emerald-400" />
+                  Quick Windows 10 &amp; 11 Setup Instructions
+                </h4>
+                <div className="space-y-2 text-xs text-slate-300">
+                  <div className="flex items-start gap-3 p-2.5 bg-[#161C1A] border border-[#25302D] rounded-sm">
+                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center shrink-0 text-xs">
+                      1
+                    </div>
+                    <div>
+                      <strong className="text-white">Download &amp; Extract:</strong> Download <code className="text-emerald-400 font-mono">FloraMedica_Pro_Windows_x64.zip</code> to your Downloads or Documents folder, right-click and choose <em>"Extract All..."</em>.
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-2.5 bg-[#161C1A] border border-[#25302D] rounded-sm">
+                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center shrink-0 text-xs">
+                      2
+                    </div>
+                    <div>
+                      <strong className="text-white">Launch the Application:</strong> Double-click <code className="text-emerald-400 font-mono">FloraMedica.exe</code> or <code className="text-emerald-400 font-mono">Run_FloraMedica_Desktop.bat</code>. No installation or administrative permissions required!
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-2.5 bg-[#161C1A] border border-[#25302D] rounded-sm">
+                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center shrink-0 text-xs">
+                      3
+                    </div>
+                    <div>
+                      <strong className="text-white">SmartScreen Tip:</strong> If Microsoft Defender SmartScreen displays a warning, click <em>"More info"</em> and then <em>"Run anyway"</em>.
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3 p-2.5 bg-[#161C1A] border border-[#25302D] rounded-sm">
+                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 font-mono font-bold flex items-center justify-center shrink-0 text-xs">
+                      4
+                    </div>
+                    <div>
+                      <strong className="text-white">Optional Desktop Shortcut:</strong> Run <code className="text-emerald-400 font-mono">Install_FloraMedica.bat</code> to automatically create a desktop shortcut and install to your user profile.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB: Marketing Site & GitHub */}
+          {activeTab === "marketing" && (
+            <div className="space-y-5 animate-fade-in">
+              {/* Marketing Hero Banner */}
+              <div className="bg-[#0F1412] border-2 border-emerald-500 rounded-sm p-4 sm:p-5 flex flex-col gap-4 shadow-xl">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2">
+                      <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
+                      <span className="text-[11px] uppercase font-mono tracking-widest text-emerald-400 font-bold">
+                        Dedicated Marketing Portal
+                      </span>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+                      <Globe className="w-5 h-5 text-emerald-400 inline" />
+                      floraMedica.stpaul2coderdojo.github.io
+                    </h3>
+                    <p className="text-slate-300 text-xs leading-relaxed max-w-xl">
+                      A standalone marketing landing page crafted for SEO visibility, highlighting medicinal plants, Ayurvedic &amp; Siddha pharmacopoeias, and direct download links for Windows and Android.
+                    </p>
+                  </div>
+
+                  <div className="flex flex-col gap-2 w-full sm:w-auto shrink-0">
+                    <a
+                      href="/marketing/index.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-black font-bold uppercase tracking-wider text-xs rounded-sm transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer text-center"
+                    >
+                      <ExternalLink className="w-4 h-4 stroke-[2.5]" />
+                      <span>Open Marketing Website</span>
+                    </a>
+                    <a
+                      href="/api/download/marketing-site.zip"
+                      className="px-5 py-2 bg-[#1A2220] hover:bg-[#25302D] text-emerald-300 border border-emerald-500/40 font-bold uppercase tracking-wider text-xs rounded-sm transition-all flex items-center justify-center gap-2 cursor-pointer text-center"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>Download Repo ZIP</span>
+                    </a>
+                  </div>
+                </div>
+
+                {/* Details Box */}
+                <div className="p-3 bg-[#161C1A] border border-[#2D3748] rounded-sm space-y-2 text-xs font-mono">
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-400">Target Domain / GitHub Pages:</span>
+                    <a
+                      href="https://floraMedica.stpaul2coderdojo.github.io"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-400 hover:underline flex items-center gap-1"
+                    >
+                      https://floraMedica.stpaul2coderdojo.github.io
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-400">GitHub Repository:</span>
+                    <a
+                      href="https://github.com/stpaul2coderdojo/floraMedica"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-emerald-400 hover:underline flex items-center gap-1"
+                    >
+                      stpaul2coderdojo/floraMedica
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* GitHub Topics & SEO Configuration */}
+              <div className="bg-[#0F1412] border border-[#2D3748] rounded-sm p-4 space-y-3">
+                <h4 className="font-bold text-white text-xs uppercase font-mono flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-emerald-400" />
+                  GitHub Repository Topics for Maximum SEO Visibility
+                </h4>
+                <p className="text-slate-300 text-xs">
+                  Set the following topics on your GitHub repository (<code className="text-emerald-400 font-mono">stpaul2coderdojo/floraMedica</code>) to maximize discovery for researchers, botanists, and ethnobotanical scholars:
+                </p>
+
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {[
+                    "medicinal-plants",
+                    "ethnobotany",
+                    "herbal-medicine",
+                    "ayurveda",
+                    "siddha-medicine",
+                    "sowa-rigpa",
+                    "plant-identification",
+                    "botanical-scanner",
+                    "traditional-pharmacopoeia",
+                    "biodiversity",
+                    "offline-pwa",
+                    "windows-desktop",
+                    "android-apk"
+                  ].map((topic) => (
+                    <span
+                      key={topic}
+                      className="px-2.5 py-1 bg-emerald-950/40 text-emerald-300 border border-emerald-500/40 rounded-full font-mono text-[11px]"
+                    >
+                      #{topic}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="p-3 bg-[#161C1A] border border-[#25302D] rounded-sm space-y-1.5 font-mono text-[11px]">
+                  <div className="text-slate-400">Quick GitHub CLI Command:</div>
+                  <div className="text-emerald-300 overflow-x-auto p-2 bg-[#0F1412] border border-[#2D3748] rounded-sm select-all">
+                    gh repo edit stpaul2coderdojo/floraMedica --add-topic "medicinal-plants" --add-topic "ethnobotany" --add-topic "ayurveda" --add-topic "siddha-medicine" --add-topic "plant-identification"
+                  </div>
+                </div>
+              </div>
+
+              {/* Deployment Guide */}
+              <div className="bg-[#0F1412] border border-[#2D3748] rounded-sm p-4 space-y-2 text-xs">
+                <h4 className="font-bold text-white text-xs uppercase font-mono flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  How to Push the Separate Marketing Repo
+                </h4>
+                <ol className="list-decimal list-inside text-slate-300 space-y-1 leading-relaxed">
+                  <li>Download the Marketing Repo ZIP above (or use the files in the directory).</li>
+                  <li>Create a new public repository on GitHub named: <code className="text-emerald-400 font-mono">floraMedica.stpaul2coderdojo.github.io</code>.</li>
+                  <li>Push the files (<code className="text-emerald-400 font-mono">index.html</code>, <code className="text-emerald-400 font-mono">CNAME</code>, <code className="text-emerald-400 font-mono">robots.txt</code>, <code className="text-emerald-400 font-mono">sitemap.xml</code>).</li>
+                  <li>Go to <strong>Settings &gt; Pages</strong> and set branch to <code className="text-emerald-400 font-mono">main</code>. Your marketing site will be live instantly!</li>
+                </ol>
+              </div>
+            </div>
+          )}
+
           {/* TAB 1: Guaranteed Working Install Guide */}
           {activeTab === "install_guide" && (
             <div className="space-y-4 animate-fade-in">
@@ -886,7 +1246,7 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({
         <div className="bg-[#111614] border-t border-[#2D3748] px-5 py-3 flex items-center justify-between text-slate-400 font-mono text-[11px]">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <span>Target: Android 8.0 to Android 15 (ARM64)</span>
+            <span>Supported: Windows 10/11 (x64) • Android 8.0+ • floraMedica.stpaul2coderdojo.github.io</span>
           </div>
           <button
             onClick={onClose}

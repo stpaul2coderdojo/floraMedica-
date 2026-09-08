@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://floraMedica.stpaul2coderdojo.github.io/sitemap.xml

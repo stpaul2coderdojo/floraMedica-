@@ -191,15 +191,15 @@ export default function App() {
                 <span className="hidden md:inline">Training Hub</span>
               </button>
 
-              {/* Download / Install Android App Action Button */}
+              {/* Download / Install Multi-Platform App Action Button */}
               <button
                 id="download-apk-header-btn"
                 onClick={() => setIsApkModalOpen(true)}
                 className="flex items-center gap-1.5 px-3 py-1.5 rounded-sm bg-emerald-500 hover:bg-emerald-400 text-black font-bold uppercase tracking-tight text-xs shadow-[0_0_12px_rgba(16,185,129,0.25)] transition-all cursor-pointer"
-                title="Install FloraMedica on Android (WebAPK / Offline APK)"
+                title="Download FloraMedica for Windows Desktop (x64), Android APK & WebAPK"
               >
-                <Smartphone className="w-3.5 h-3.5 stroke-[2.5]" />
-                <span className="hidden sm:inline">Install Android App</span>
+                <Download className="w-3.5 h-3.5 stroke-[2.5]" />
+                <span className="hidden sm:inline">Downloads (Win/APK)</span>
                 <span className="sm:hidden">Get App</span>
               </button>
 
@@ -562,16 +562,17 @@ export default function App() {
               <span>Dr. Bheemaiah Anil K &amp; Mother Divine Inc, Seattle</span>
               <span>•</span>
               <a
-                href="https://floramedica.org"
+                href="https://floraMedica.stpaul2coderdojo.github.io"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-emerald-400 hover:underline flex items-center gap-1"
+                title="FloraMedica Official Marketing Site & Medicinal Plants Portal"
               >
-                <Globe className="w-3 h-3 inline" /> floramedica.org
+                <Globe className="w-3 h-3 inline" /> floraMedica.stpaul2coderdojo.github.io
               </a>
             </div>
 
-            <div className="flex items-center gap-3 self-end md:self-auto text-[10px] uppercase tracking-wider">
+            <div className="flex flex-wrap items-center gap-3 self-end md:self-auto text-[10px] uppercase tracking-wider">
               <span className="flex items-center gap-1.5">
                 <span className="w-2 h-2 bg-emerald-500 rounded-full" /> System Status: Ready
               </span>
@@ -579,11 +580,12 @@ export default function App() {
               <button
                 onClick={() => setIsApkModalOpen(true)}
                 className="text-emerald-400 hover:text-emerald-300 flex items-center gap-1 cursor-pointer transition-colors font-bold"
+                title="Download Windows Desktop (x64) or Android APK"
               >
-                <Smartphone className="w-3 h-3" /> Android APK
+                <Download className="w-3 h-3" /> Windows &amp; Android Downloads
               </button>
               <span>•</span>
-              <span className="text-slate-500">v4.0.2-Build_Global</span>
+              <span className="text-slate-500">v4.5.0-Global-300K</span>
             </div>
           </div>
         </div>

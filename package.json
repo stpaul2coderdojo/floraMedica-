@@ -1,7 +1,30 @@
 {
-  "name": "react-example",
+  "name": "floramedica-pro",
+  "description": "FloraMedica Pro: Offline AI Botanical Scanner, Medicinal Plants & Traditional Pharmacopoeia (Ayurveda, Siddha, Sowa-Rigpa) with Multi-Organ Vision, Population Estimation & Biodiversity Health Survey",
+  "keywords": [
+    "medicinal-plants",
+    "ethnobotany",
+    "herbal-medicine",
+    "ayurveda",
+    "siddha",
+    "sowa-rigpa",
+    "plant-identification",
+    "botany",
+    "pharmacopoeia",
+    "biodiversity",
+    "plantnet",
+    "offline-pwa",
+    "windows-desktop",
+    "android-apk",
+    "traditional-medicine"
+  ],
+  "homepage": "https://floraMedica.stpaul2coderdojo.github.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stpaul2coderdojo/floraMedica"
+  },
   "private": true,
-  "version": "0.0.0",
+  "version": "4.5.0",
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",

@@ -39,8 +39,16 @@ self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
   
   const url = event.request.url;
-  // NEVER hijack binary file downloads, APK downloads, or dynamic API routes
-  if (url.includes('/api/download') || url.includes('/download/') || url.endsWith('.apk') || url.includes('/api/identify-plant')) {
+  // NEVER hijack binary file downloads, APK/Windows downloads, or dynamic API routes
+  if (
+    url.includes('/api/download') ||
+    url.includes('/download/') ||
+    url.endsWith('.apk') ||
+    url.endsWith('.exe') ||
+    url.endsWith('.zip') ||
+    url.includes('/marketing') ||
+    url.includes('/api/identify-plant')
+  ) {
     return;
   }
 

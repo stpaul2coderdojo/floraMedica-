@@ -1,0 +1,10 @@
+# Robots.txt for FloraMedica Pro
+# https://floraMedica.stpaul2coderdojo.github.io
+
+User-agent: *
+Allow: /
+Allow: /marketing
+Allow: /download/
+
+# Sitemaps
+Sitemap: https://floraMedica.stpaul2coderdojo.github.io/sitemap.xml
