@@ -27,7 +27,7 @@ import {
   Utensils,
   BarChart3,
 } from "lucide-react";
-import { PlantData, PlantNetOrgan, PlantNetDatasetType } from "../types";
+import { PlantData, PlantNetMorphology, PlantNetOrgan, PlantNetDatasetType } from "../types";
 import { PlantService, FULL_BOTANICAL_DATABASE } from "../services/plantService";
 import { PlantNetDatasetsModal } from "./PlantNetDatasetsModal";
 
@@ -61,7 +61,7 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({
   const [isTorchOn, setIsTorchOn] = useState(false);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [showMorphologyFilter, setShowMorphologyFilter] = useState(false);
-  const [selectedOrgan, setSelectedOrgan] = useState<PlantNetOrgan | "auto">("auto");
+  const [selectedOrgan, setSelectedOrgan] = useState<PlantNetMorphology | "auto">("auto");
   const [selectedDataset, setSelectedDataset] = useState<PlantNetDatasetType | "all">("all");
   const [isDatasetsModalOpen, setIsDatasetsModalOpen] = useState(false);
 
@@ -436,7 +436,7 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({
   };
 
   const organOptions: { id: PlantNetOrgan | "auto"; label: string; icon: string; desc: string }[] = [
-    { id: "auto", label: "Auto Organ", icon: "⚡", desc: "Pl@ntNet-300K multi-organ detector" },
+    { id: "auto", label: "Auto Morphology", icon: "⚡", desc: "Pl@ntNet-300K botanical morphology detector" },
     { id: "leaf", label: "Leaf", icon: "🌿", desc: "Foliage venation & margins" },
     { id: "flower", label: "Flower", icon: "🌸", desc: "Corolla & stamen symmetry" },
     { id: "fruit", label: "Fruit / Seed", icon: "🍎", desc: "Pericarp & seed pod" },
@@ -566,7 +566,7 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({
             id="scanner-open-chatbot-card-btn"
             onClick={onOpenChatbot}
             className="flex items-center justify-between p-2.5 bg-[#0F1412] hover:bg-[#131D19] border border-emerald-500/40 hover:border-emerald-400 rounded-sm text-left transition-all cursor-pointer group shadow-sm"
-            title="Ask Multi-Organ Botanical AI (Leaves, Flowers, Fruits, Bark & Pharmacopoeia)"
+            title="Ask Plant Morphology Botanical AI (Leaves, Flowers, Fruits, Bark & Pharmacopoeia)"
           >
             <div className="flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-sm bg-emerald-500/20 text-emerald-400 flex items-center justify-center group-hover:scale-105 group-hover:bg-emerald-500 group-hover:text-black transition-all">
@@ -582,7 +582,7 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({
                   </span>
                 </div>
                 <span className="text-[10px] text-slate-400 font-mono line-clamp-1">
-                  Multi-Organ Diagnostics
+                  Plant Morphology Diagnostics
                 </span>
               </div>
             </div>
@@ -623,14 +623,14 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({
         </button>
       </div>
 
-      {/* Pl@ntNet-300K Organ & Dataset Targeting Bar */}
+      {/* Pl@ntNet-300K Plant Morphology & Dataset Targeting Bar */}
       <div className="flex flex-col gap-2 bg-[#161C1A] p-2.5 rounded-sm border border-[#2D3748]">
-        {/* Organ Prior Selector */}
+        {/* Plant Morphology Selector */}
         <div className="flex items-center justify-between flex-wrap gap-1.5">
           <div className="flex items-center gap-1.5">
             <Target className="w-3.5 h-3.5 text-emerald-400" />
             <span className="text-[10px] font-bold uppercase tracking-widest text-slate-300 font-mono">
-              Pl@ntNet Organ:
+              Plant Morphology:
             </span>
           </div>
           <div className="flex items-center gap-1 overflow-x-auto scrollbar-none py-0.5">
@@ -864,8 +864,8 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({
 
               <span className="text-[10px] uppercase font-mono tracking-widest text-emerald-400 px-2 py-0.5 bg-[#0F1412]/80 border border-emerald-500/30 rounded-sm z-10">
                 {selectedOrgan === "auto"
-                  ? "Align Specimen Organ"
-                  : `Align ${selectedOrgan.toUpperCase()} Organ`}
+                  ? "Align Specimen Plant Morphology"
+                  : `Align ${selectedOrgan.toUpperCase()} Morphology`}
               </span>
             </div>
 
@@ -876,7 +876,7 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({
                   Zenodo Dataset 5645731 Benchmark
                 </div>
                 <div className="text-[11px] text-slate-400 font-mono">
-                  Organ: {selectedOrgan.toUpperCase()} | 306K Specimen Benchmark | Top-K Candidate Set
+                  Plant Morphology: {selectedOrgan.toUpperCase()} | 306K Specimen Benchmark | Top-K Candidate Set
                 </div>
               </div>
               <div className="text-[10px] uppercase font-mono tracking-wider text-emerald-400 flex items-center gap-1">
@@ -900,7 +900,7 @@ export const CameraScanner: React.FC<CameraScannerProps> = ({
               Pl@ntNet-300K & Pharmacopoeial Analysis...
             </h4>
             <p className="text-xs text-slate-400 mt-1 max-w-xs font-mono">
-              Evaluating organ priors, resolving label ambiguity via top-k candidates, and extracting Siddha/Sowa-Rigpa monographs.
+              Evaluating plant morphology priors, resolving label ambiguity via top-k candidates, and extracting Siddha/Sowa-Rigpa monographs.
             </p>
           </div>
         )}

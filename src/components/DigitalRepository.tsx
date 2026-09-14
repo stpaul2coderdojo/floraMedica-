@@ -421,7 +421,7 @@ export const DigitalRepository: React.FC<DigitalRepositoryProps> = ({
             </div>
 
             <h3 className="text-base font-bold text-white leading-snug">
-              PL@NTNET-300K: A High-Confidence Benchmark for Multi-Organ Plant Identification & Set-Valued Classification
+              PL@NTNET-300K: A High-Confidence Benchmark for Botanical Morphology Plant Identification & Set-Valued Classification
             </h3>
 
             <p className="text-emerald-400/90 font-serif italic">
@@ -429,7 +429,7 @@ export const DigitalRepository: React.FC<DigitalRepositoryProps> = ({
             </p>
 
             <p className="text-slate-300 leading-relaxed bg-[#0F1412] p-3.5 rounded-sm border border-[#2D3748]">
-              Pl@ntNet-300K is a large-scale botanical dataset and benchmark containing 306,146 validated images covering 1,081 species and 168 plant families across 6 organ categories (leaf, flower, fruit, bark, habit, and other). This dataset models high label ambiguity and class imbalance, enabling top-k set-valued classification for reliable herbal and botanical identification in field conditions.
+              Pl@ntNet-300K is a large-scale botanical dataset and benchmark containing 306,146 validated images covering 1,081 species and 168 plant families across 6 plant morphology categories (leaf, flower, fruit, bark, habit, and other). This dataset models high label ambiguity and class imbalance, enabling top-k set-valued classification for reliable herbal and botanical identification in field conditions.
             </p>
 
             <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#2D3748]">

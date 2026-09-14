@@ -1,7 +1,6 @@
 import express from "express";
 import path from "path";
 import fs from "fs";
-import { createServer as createViteServer } from "vite";
 import { GoogleGenAI, Type } from "@google/genai";
 import dotenv from "dotenv";
 
@@ -115,7 +114,7 @@ async function startServer() {
       targetSdk: 35,
       sha256Checksum: "a8f7c9e2b1049581d63428fbcd45e12089347510293485710293847510293847",
       features: [
-        "Pl@ntNet-300K Benchmark Organ Priors (NeurIPS 2021)",
+        "Pl@ntNet-300K Benchmark Plant Morphology Priors (NeurIPS 2021)",
         "300,000-Image Evaluation Test Set Matrix Embedded",
         "42,800+ Regional Medicinal Taxa Offline Database",
         "3D Botanical Anatomy Real-time Renderer",
@@ -222,10 +221,10 @@ async function startServer() {
     const readmeContent = `FloraMedica Pro - Offline Android Package (v4.5.0-Global-Benchmark-300K)
 =======================================================================
 Key Features:
-1. Pl@ntNet-300K fine-grained multi-organ botanical identification engine (NeurIPS 2021).
+1. Pl@ntNet-300K fine-grained botanical morphology identification engine (NeurIPS 2021).
 2. Embedded 300,000-image evaluation benchmark matrix and confusion analyzer.
 3. Complete offline traditional pharmacopoeial monographs (Sowa-Rigpa, Siddha, Ayurveda).
-4. Interactive 3D botanical organ viewer for anatomical leaf, flower, and root structure.
+4. Interactive 3D botanical plant morphology viewer for anatomical leaf, flower, and root structure.
 5. Offline herbarium collector for field research without cellular connectivity.
 `;
 
@@ -438,7 +437,7 @@ QUICK START:
 
 FEATURES:
 - 42,800+ offline medicinal plants (Siddha Gunapadam, Sowa-Rigpa, Ayurveda).
-- Pl@ntNet-300K benchmark multi-organ vision priors.
+- Pl@ntNet-300K benchmark plant morphology vision priors.
 - Plant Grouping & Quadrat Biodiversity population estimation.
 - 100% offline edge execution with USB webcam and CSV/JSON export.
 `;
@@ -708,7 +707,7 @@ FEATURES:
     res.json({
       name: "FloraMedica Pro - Botanical Scanner",
       short_name: "FloraMedica",
-      description: "Offline plant identification, Pl@ntNet-300K organ priors, and Traditional Pharmacopoeia database.",
+      description: "Offline plant identification, Pl@ntNet-300K plant morphology priors, and Traditional Pharmacopoeia database.",
       start_url: "/",
       scope: "/",
       display: "standalone",
@@ -893,8 +892,8 @@ self.addEventListener('fetch', (event) => {
 
       const organPriorDirective =
         targetOrgan && targetOrgan !== "auto"
-          ? `USER-SPECIFIED ORGAN PRIOR: Focus specifically on the [${targetOrgan.toUpperCase()}] organ class to resolve fine-grained taxonomic ambiguity using Pl@ntNet-300K organ benchmarks.`
-          : `MULTI-ORGAN AUTO-DETECTION: Auto-detect the primary plant organ (leaf, flower, fruit, bark, habit, or other) based on Pl@ntNet-300K standard anatomical categories.`;
+          ? `USER-SPECIFIED PLANT MORPHOLOGY PRIOR: Focus specifically on the [${targetOrgan.toUpperCase()}] plant morphology class to resolve fine-grained taxonomic ambiguity using Pl@ntNet-300K plant morphology benchmarks.`
+          : `PLANT MORPHOLOGY AUTO-DETECTION: Auto-detect the primary plant morphology (leaf, flower, fruit, bark, habit, or other) based on Pl@ntNet-300K standard anatomical categories.`;
 
       let plantNetContext = "";
       if (plantNetResult && plantNetResult.bestMatch) {
@@ -924,11 +923,11 @@ ${plantNetContext}
 ${organPriorDirective}
 
 ACCURACY PROTOCOL (Pl@ntNet-300K Zenodo Benchmark):
-1. ORGAN IDENTIFICATION & FEATURE EXTRACTION:
-   - Identify the exact visible organ type: 'leaf', 'flower', 'fruit', 'bark', 'habit', or 'other'.
+1. PLANT MORPHOLOGY IDENTIFICATION & FEATURE EXTRACTION:
+   - Identify the exact visible plant morphology type: 'leaf', 'flower', 'fruit', 'bark', 'habit', or 'other'.
    - Extract fine-grained diagnostic morphological characters: venation patterns (actinodromous, brochidodromous), phyllotaxy, petal symmetry/corolla morphology, carpel structure, and cortical bark fissures.
 2. SET-VALUED TOP-K CLASSIFICATION (Resolving Intrinsic Ambiguity):
-   - To counteract the high label ambiguity and long-tailed distribution intrinsic to plant datasets, provide the primary identification plus the Top-3 to Top-5 closest alternative candidate species (with distinguishing characters, organ class, and relative confidence probabilities).
+   - To counteract the high label ambiguity and long-tailed distribution intrinsic to plant datasets, provide the primary identification plus the Top-3 to Top-5 closest alternative candidate species (with distinguishing characters, plant morphology class, and relative confidence probabilities).
 3. MULTI-TRADITION PHARMACOGNOSY (TELUGU FOR SIDDHA MEDICINE):
    - Siddha Medicine: Provide Telugu vernacular and traditional medicinal name in 'teluguName' (e.g., 'మిరియాలు' / 'Miriyalu' for Piper nigrum, 'బిల్లాగన్నేరు' / 'Billa Ganneru' for Catharanthus roseus, 'మునగ' / 'Munaga' for Moringa oleifera, 'తిప్పతీగ' / 'Tippateega' for Tinospora cordifolia, 'ఉసిరి' / 'Usiri' for Phyllanthus emblica, 'తామర' / 'Tamara' for Nelumbo nucifera, 'జీలకర్ర' / 'Jeelakarra' for Cuminum cyminum, 'ఉమ్మెత్త' / 'Ummettha' for Datura metel).
    - Gunam, Veeryam, Vibagham, and Sastric drug origin (Leaf, Flower, Seed, Root, Bark, or Whole Plant), plus classical Telugu/Siddha formulations.
@@ -938,7 +937,7 @@ ACCURACY PROTOCOL (Pl@ntNet-300K Zenodo Benchmark):
 4. FORAGING & EDIBILITY SAFETY:
    - Accurate edibility safety score (0-100), toxic lookalikes with distinct morphological differentiators, and safety warnings.
 
-User Notes/Context: ${userNotes || "Identify this botanical specimen with high precision using Pl@ntNet-300K organ priors, set-valued candidate evaluation, traditional pharmacopoeias, and edibility safety."}
+User Notes/Context: ${userNotes || "Identify this botanical specimen with high precision using Pl@ntNet-300K plant morphology priors, set-valued candidate evaluation, traditional pharmacopoeias, and edibility safety."}
 
 Return the response strictly adhering to the specified JSON schema.`;
 
@@ -1732,7 +1731,7 @@ Return strictly adhering to the JSON schema.`;
                 data: cleanB64,
               },
             });
-            const organTag = img.organ ? `[Organ: ${img.organ.toUpperCase()}]` : "";
+            const organTag = img.organ ? `[Plant Morphology: ${img.organ.toUpperCase()}]` : "";
             const labelTag = img.label ? `(${img.label})` : "";
             imageDescriptions.push(`Image #${idx + 1}: ${organTag} ${labelTag}`);
           }
@@ -1750,7 +1749,7 @@ You are calibrated on the Pl@ntNet-300K Benchmark (Garcin et al., NeurIPS Datase
 ${plantContextPrompt}
 
 ATTACHED IMAGES FOR THIS QUERY:
-${imageDescriptions.length > 0 ? imageDescriptions.join("\n") + "\n(Analyze all uploaded images in conjunction with the user's question, cross-referencing leaf venation, flower symmetry, bark texture, and organ priors.)" : "No new images attached in this turn; refer to current identification context."}
+${imageDescriptions.length > 0 ? imageDescriptions.join("\n") + "\n(Analyze all uploaded images in conjunction with the user's question, cross-referencing leaf venation, flower symmetry, bark texture, and plant morphology priors.)" : "No new images attached in this turn; refer to current identification context."}
 
 INSTRUCTIONS FOR ANSWERS:
 1. Context Grounding: Directly reference the active plant's diagnostic traits, Telugu Siddha name, Sowa-Rigpa taste/potency, Ayurvedic energetics, and chemical constituents when relevant.
@@ -1798,10 +1797,10 @@ ${formattedHistory}`;
             const preps = p.medicinal?.preparations || [];
             replyText = `### 🧪 Traditional Formulations & Posology: **${p.scientificName}**\n\n${preps.length > 0 ? preps.map((pr: any) => `#### **${pr.type}**\n- **Method:** ${pr.recipe}\n- **Dosage:** ${pr.dosage}\n${pr.safetyNote ? `- *Precaution:* ${pr.safetyNote}` : ""}`).join("\n\n") : "- **Decoction (Kashayam):** Boil 10g dried herb in 200ml water reduced to 50ml. Take 25-50ml twice daily before meals."}\n\n**Ethnobotanical Advisory:**\nHarvest sustainably from uncontaminated habitats; dry strictly under shade.`;
           } else {
-            replyText = `### 🌿 Botanical & Pharmacopoeial Review: **${p.scientificName}**\n\n**Taxonomy & Morphology:**\n- **Family:** ${p.family}\n- **Common Names:** ${(p.commonNames || []).join(", ")}\n- **Habitat:** ${p.habitat || "Subtropical / Tropical"}\n- **Morphology:** ${p.botanicalDescription?.summary || "Botanical specimen monograph recorded in pharmacopoeial reference database."}\n\n${imgCount > 0 ? `**Multi-Organ Vouchers:** Verified ${imgCount} attached image(s) against Pl@ntNet-300K anatomical benchmarks.\n\n` : ""}**Primary Medicinal Actions:**\n${(p.medicinal?.primaryActions || []).map((a: string) => `- ${a}`).join("\n") || "- Traditional Botanical Tonic"}\n\n**Phytochemistry & Active Markers:**\n- **Bioactive Markers:** ${(p.medicinal?.westernPhytotherapy?.activeConstituents || []).join(", ") || "Standard flavonoids and terpenoids"}\n- **Pharmacology:** ${p.medicinal?.westernPhytotherapy?.pharmacology || "Bioactive constituents demonstrate demonstrated therapeutic properties."}`;
+            replyText = `### 🌿 Botanical & Pharmacopoeial Review: **${p.scientificName}**\n\n**Taxonomy & Morphology:**\n- **Family:** ${p.family}\n- **Common Names:** ${(p.commonNames || []).join(", ")}\n- **Habitat:** ${p.habitat || "Subtropical / Tropical"}\n- **Morphology:** ${p.botanicalDescription?.summary || "Botanical specimen monograph recorded in pharmacopoeial reference database."}\n\n${imgCount > 0 ? `**Plant Morphology Vouchers:** Verified ${imgCount} attached image(s) against Pl@ntNet-300K anatomical benchmarks.\n\n` : ""}**Primary Medicinal Actions:**\n${(p.medicinal?.primaryActions || []).map((a: string) => `- ${a}`).join("\n") || "- Traditional Botanical Tonic"}\n\n**Phytochemistry & Active Markers:**\n- **Bioactive Markers:** ${(p.medicinal?.westernPhytotherapy?.activeConstituents || []).join(", ") || "Standard flavonoids and terpenoids"}\n- **Pharmacology:** ${p.medicinal?.westernPhytotherapy?.pharmacology || "Bioactive constituents demonstrate demonstrated therapeutic properties."}`;
           }
         } else {
-          replyText = `### 🌿 FloraMedica Botanical & Pharmacopoeia AI\n\nI am calibrated on the **Pl@ntNet-300K benchmark** (Zenodo 5645731) and classical traditional pharmacopoeias (Siddha Gunapadam, Sowa-Rigpa rGyud-bZhi, and Ayurvedic Pharmacopoeia).\n\n${imgCount > 0 ? `You have uploaded **${imgCount} specimen photo(s)**. You can ask for leaf venation comparisons, organ prior evaluation, or identify the plant in the Live Scanner.` : "Select any specimen from the Herbarium or upload photos (leaf, flower, fruit, bark) to analyze morphological traits, dosage, and safety."}`;
+          replyText = `### 🌿 FloraMedica Botanical & Pharmacopoeia AI\n\nI am calibrated on the **Pl@ntNet-300K benchmark** (Zenodo 5645731) and classical traditional pharmacopoeias (Siddha Gunapadam, Sowa-Rigpa rGyud-bZhi, and Ayurvedic Pharmacopoeia).\n\n${imgCount > 0 ? `You have uploaded **${imgCount} specimen photo(s)**. You can ask for leaf venation comparisons, plant morphology prior evaluation, or identify the plant in the Live Scanner.` : "Select any specimen from the Herbarium or upload photos (leaf, flower, fruit, bark) to analyze morphological traits, dosage, and safety."}`;
         }
       }
 
@@ -1809,7 +1808,7 @@ ${formattedHistory}`;
       const suggestedFollowUps = [
         currentPlantContext ? `What is the classical Siddha preparation for ${currentPlantContext.scientificName}?` : "How do I identify medicinal plants by leaf venation?",
         currentPlantContext ? `Are there any toxic lookalikes for ${currentPlantContext.commonNames?.[0] || currentPlantContext.scientificName}?` : "What are the core principles of Sowa-Rigpa medicine?",
-        currentPlantContext ? `What are the active phytochemical constituents in ${currentPlantContext.scientificName}?` : "How does Pl@ntNet-300K resolve organ ambiguity?",
+        currentPlantContext ? `What are the active phytochemical constituents in ${currentPlantContext.scientificName}?` : "How does Pl@ntNet-300K resolve plant morphology ambiguity?",
       ];
 
       return res.json({
@@ -1934,7 +1933,7 @@ ${formattedHistory}`;
         imageSnippet: feedbackPayload.imageSnippet || null,
         userNotes: feedbackPayload.userNotes || "",
         modelFineTuningExport: {
-          prompt: `Identify the botanical specimen using Pl@ntNet-300K organ priors and high-resolution diagnostic morphology.`,
+          prompt: `Identify the botanical specimen using Pl@ntNet-300K plant morphology priors and high-resolution diagnostic morphology.`,
           expectedOutputLabel:
             feedbackPayload.userDecision === "corrected" && feedbackPayload.correctedData?.scientificName
               ? feedbackPayload.correctedData.scientificName
@@ -2005,7 +2004,7 @@ ${formattedHistory}`;
         "Decision",
         "Original Scientific Name",
         "Original Family",
-        "Detected Organ",
+        "Detected Plant Morphology",
         "Original Confidence",
         "Ground Truth Scientific Name",
         "Ground Truth Family",
@@ -2050,11 +2049,11 @@ ${formattedHistory}`;
           {
             role: "system",
             content:
-              "You are FloraMedica taxonomic vision engine calibrated on Pl@ntNet-300K multi-organ botanical benchmarks.",
+              "You are FloraMedica taxonomic vision engine calibrated on Pl@ntNet-300K botanical morphology benchmarks.",
           },
           {
             role: "user",
-            content: `Analyze the provided botanical image focusing on the [${organ.toUpperCase()}] organ prior. Provide verified scientific taxon and traditional pharmacopoeia monograph.`,
+            content: `Analyze the provided botanical image focusing on the [${organ.toUpperCase()}] plant morphology prior. Provide verified scientific taxon and traditional pharmacopoeia monograph.`,
           },
           {
             role: "assistant",
@@ -2081,6 +2080,7 @@ ${formattedHistory}`;
 
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
+    const { createServer: createViteServer } = await import("vite");
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: "spa",

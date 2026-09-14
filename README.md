@@ -3,14 +3,14 @@
 [![License: CC BY-SA 4.0](https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-sa/4.0/)
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22202177-blue.svg)](https://doi.org/10.5281/zenodo.22202177)
 
-**FloraMedica Pro** is an open-access, offline-first neural-pharmacopoeial synthesis system that integrates **Pl@ntNet Multi-Organ Vision (v2 REST API & NeurIPS 300K Benchmark)**, **Google Cloud Vision OCR**, and **Gemini 3.7 Flash / 3.1 Flash-Lite neural cascades** with classical **Siddha (Gunapadam)**, **Tibetan Sowa-Rigpa (rGyud-bZhi)**, and **Ayurvedic Materia Medica** for high-confidence botanical identification, toxic lookalike disambiguation, and edge field diagnostics.
+**FloraMedica Pro** is an open-access, offline-first neural-pharmacopoeial synthesis system that integrates **Pl@ntNet Multi-Plant-Part Vision (v2 REST API & NeurIPS 300K Benchmark)**, **Google Cloud Vision OCR**, and **Gemini 3.7 Flash / 3.1 Flash-Lite neural cascades** with classical **Siddha (Gunapadam)**, **Tibetan Sowa-Rigpa (rGyud-bZhi)**, and **Ayurvedic Materia Medica** for high-confidence botanical identification, toxic lookalike disambiguation, and edge field diagnostics.
 
 ---
 
 ## 🌿 Core Features
 
-1. **Pl@ntNet Multi-Organ Vision Integration:**
-   - Real-time queries to Pl@ntNet v2 REST API supporting multi-organ image payloads (`leaf`, `flower`, `fruit`, `bark`).
+1. **Pl@ntNet Multi-Plant-Part Vision Integration:**
+   - Real-time queries to Pl@ntNet v2 REST API supporting multi-plant-part image payloads (`leaf`, `flower`, `fruit`, `bark`).
    - Calibrated on the NeurIPS Pl@ntNet-300K benchmark (306,146 images across 1,081 species, Zenodo: `5645731`).
    - 89.4% top-1 and 98.2% top-5 accuracy with Bayesian Dirichlet prior fusion.
 
@@ -49,7 +49,7 @@
 ├── public/                       # Static assets, PWA manifest, and icons
 ├── src/
 │   ├── components/
-│   │   ├── BotanicalScanner.tsx          # Multi-organ image capture & live identification
+│   │   ├── BotanicalScanner.tsx          # Multi-plant-part image capture & live identification
 │   │   ├── PharmacopoeiaDossier.tsx      # Siddha, Sowa-Rigpa & Ayurvedic monographs
 │   │   ├── DigitalRepository.tsx         # Digital repository & papers browser
 │   │   ├── HerbariumOCRScanner.tsx       # Google Cloud Vision herbarium OCR

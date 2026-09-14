@@ -466,7 +466,7 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({
                     <Cpu className="w-3.5 h-3.5" /> Pl@ntNet-300K Priors
                   </div>
                   <p className="text-slate-400 text-[10px]">
-                    Organ-aware recognition (Leaf, Flower, Fruit, Bark, Habit) with fast edge neural inference.
+                    Plant morphology-aware recognition (Leaf, Flower, Fruit, Bark, Habit) with fast edge neural inference.
                   </p>
                 </div>
                 <div className="p-3 bg-[#0F1412] border border-[#2D3748] rounded-sm space-y-1">
@@ -869,7 +869,7 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-300 mt-1.5 leading-normal">
-                    Contains 42,800+ offline species catalog, 300,000-image Pl@ntNet test set index, neural vision embedding weights, 3D anatomical organ models, and native ARM64 engine.
+                    Contains 42,800+ offline species catalog, 300,000-image Pl@ntNet test set index, neural vision embedding weights, 3D anatomical plant morphology models, and native ARM64 engine.
                   </p>
                 </div>
 
@@ -1193,7 +1193,7 @@ export const AndroidApkModal: React.FC<AndroidApkModalProps> = ({
                     <tr className="hover:bg-[#161C1A]">
                       <td className="p-2.5 text-emerald-400 font-bold">lib/arm64-v8a/libfloramedica_native.so</td>
                       <td className="p-2.5 font-bold text-white">15.8 MB</td>
-                      <td className="p-2.5 text-slate-400">Native OpenCV + TFLite multi-organ computer vision engine (ARM64)</td>
+                      <td className="p-2.5 text-slate-400">Native OpenCV + TFLite plant morphology computer vision engine (ARM64)</td>
                     </tr>
                     <tr className="hover:bg-[#161C1A]">
                       <td className="p-2.5 text-emerald-400 font-bold">lib/armeabi-v7a/libfloramedica_native.so</td>

@@ -177,7 +177,7 @@ export const OfflineHerbarium: React.FC<OfflineHerbariumProps> = ({
               </span>
             </div>
             <p className="text-slate-400 text-[11px] font-mono mt-0.5">
-              Includes full offline taxonomic database, Pl@ntNet-300K organ priors, and Sowa-Rigpa/Siddha monographs.
+              Includes full offline taxonomic database, Pl@ntNet-300K plant morphology priors, and Sowa-Rigpa/Siddha monographs.
             </p>
           </div>
         </div>

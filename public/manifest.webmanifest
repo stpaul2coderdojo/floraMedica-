@@ -1,7 +1,7 @@
 {
   "name": "FloraMedica Pro - Botanical Scanner",
   "short_name": "FloraMedica",
-  "description": "Offline plant identification, Pl@ntNet-300K organ priors, and Traditional Pharmacopoeia database.",
+  "description": "Offline plant identification, Pl@ntNet-300K plant part priors, and Traditional Pharmacopoeia database.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

@@ -86,7 +86,7 @@ export const BotanicalChatbot: React.FC<BotanicalChatbotProps> = ({
       : "What are the core diagnostic rules of Sowa-Rigpa pharmacopoeia?",
     currentPlant
       ? `What active phytochemicals are in this plant?`
-      : "Explain Pl@ntNet-300K organ priors and top-k resolution.",
+      : "Explain Pl@ntNet-300K plant morphology priors and top-k resolution.",
   ]);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [selectedOrganForNextUpload, setSelectedOrganForNextUpload] = useState<PlantNetOrgan>("leaf");
@@ -432,7 +432,7 @@ export const BotanicalChatbot: React.FC<BotanicalChatbotProps> = ({
                       >
                         <img
                           src={img.data}
-                          alt="Specimen organ"
+                          alt="Specimen plant morphology"
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                           referrerPolicy="no-referrer"
                         />
@@ -493,7 +493,7 @@ export const BotanicalChatbot: React.FC<BotanicalChatbotProps> = ({
             </div>
             <div className="bg-[#161C1A] border border-[#2D3748] rounded-md p-3 text-xs font-mono text-emerald-400 flex items-center gap-2">
               <div className="w-3 h-3 border-2 border-emerald-400 border-t-transparent rounded-full animate-spin" />
-              <span>Analyzing botanical organs & pharmacopoeial matrices...</span>
+              <span>Analyzing botanical morphology & pharmacopoeial matrices...</span>
             </div>
           </div>
         )}
@@ -557,9 +557,9 @@ export const BotanicalChatbot: React.FC<BotanicalChatbotProps> = ({
                   </button>
                 </div>
 
-                {/* Organ Selector Dropdown per Image */}
+                {/* Plant Morphology Selector Dropdown per Image */}
                 <div className="flex items-center justify-between gap-1 text-[10px] font-mono">
-                  <span className="text-slate-400">Organ:</span>
+                  <span className="text-slate-400">Morphology:</span>
                   <select
                     value={img.organ}
                     onChange={(e) =>
@@ -582,10 +582,10 @@ export const BotanicalChatbot: React.FC<BotanicalChatbotProps> = ({
 
       {/* Input Composer Bar */}
       <div className="p-3 sm:p-4 bg-[#161C1A] border-t border-[#2D3748] space-y-2">
-        {/* Organ Prior Selector for next upload */}
+        {/* Plant Morphology Selector for next upload */}
         <div className="flex items-center justify-between flex-wrap gap-2 text-[10px] font-mono text-slate-400">
           <div className="flex items-center gap-1.5">
-            <span>Next Photo Organ:</span>
+            <span>Next Photo Morphology:</span>
             <div className="flex items-center gap-1">
               {organList.map((o) => (
                 <button

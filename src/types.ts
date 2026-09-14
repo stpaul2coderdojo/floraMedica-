@@ -177,7 +177,8 @@ export interface AcademicPaper {
   abstract: string;
 }
 
-export type PlantNetOrgan = "leaf" | "flower" | "fruit" | "bark" | "habit" | "other";
+export type PlantNetMorphology = "leaf" | "flower" | "fruit" | "bark" | "habit" | "other";
+export type PlantNetOrgan = PlantNetMorphology; // Backward-compatibility alias
 
 export type PlantNetDatasetType =
   | "plantnet_300k"

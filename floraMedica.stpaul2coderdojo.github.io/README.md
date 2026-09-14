@@ -58,8 +58,8 @@ This repository is designed for instant zero-configuration deployment to **GitHu
 
 ## 📦 What's Included on this Marketing Site
 
-- **Hero & Value Proposition:** Multi-organ computer vision meets classical Indian and Himalayan pharmacopoeias.
-- **Interactive UI Preview:** Live simulated optical scanner with multi-organ leaf/flower/fruit bounding boxes and pharmacopoeial synthesis.
+- **Hero & Value Proposition:** Multi-plant-part computer vision meets classical Indian and Himalayan pharmacopoeias.
+- **Interactive UI Preview:** Live simulated optical scanner with multi-plant-part leaf/flower/fruit bounding boxes and pharmacopoeial synthesis.
 - **Traditional Medicine System Breakdown:** Classical Siddha Gunapadam, Tibetan Sowa-Rigpa rGyud-bZhi, and Ayurvedic Dravyaguna monographs.
 - **Download Center:**
   - **Windows Desktop Edition:** Standalone x64 portable ZIP (`FloraMedica_Pro_Windows_x64.zip`) & Installer (`FloraMedica_Pro_Setup_x64.exe`).

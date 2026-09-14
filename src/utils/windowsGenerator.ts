@@ -175,7 +175,7 @@ QUICK START INSTRUCTIONS:
    - This copies FloraMedica to %LOCALAPPDATA%\\FloraMedicaPro and places a clean shortcut on your Desktop and Start Menu.
 
 KEY DESKTOP CAPABILITIES:
-- Pl@ntNet-300K Multi-Organ AI Vision integration for Leaf, Flower, Fruit, Bark, and Habit.
+- Pl@ntNet-300K Botanical Morphology AI Vision integration for Leaf, Flower, Fruit, Bark, and Habit.
 - 42,800+ offline medicinal taxa database across Siddha Gunapadam, Sowa-Rigpa rGyud-bZhi, and Ayurveda.
 - Plant Grouping & Quadrat Biodiversity Survey (Shannon-Wiener H', Simpson 1/D, Evenness, Density).
 - USB / Built-in Webcam streaming for real-time live plant identification.

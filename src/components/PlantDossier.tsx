@@ -123,7 +123,7 @@ export const PlantDossier: React.FC<PlantDossierProps> = ({
               {plant.plantnet300k?.detectedOrgan && (
                 <span className="px-2.5 py-0.5 text-[10px] font-mono uppercase tracking-wider rounded-sm bg-emerald-950/40 border border-emerald-800 text-emerald-300 font-bold flex items-center gap-1">
                   <Layers className="w-3 h-3 text-emerald-400" />
-                  Organ: {plant.plantnet300k.detectedOrgan}
+                  Plant Morphology: {plant.plantnet300k.detectedOrgan}
                 </span>
               )}
               {plant.plantnetDatasets && plant.plantnetDatasets.length > 0 && (
@@ -782,7 +782,7 @@ export const PlantDossier: React.FC<PlantDossierProps> = ({
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="text-sm sm:text-base font-bold uppercase tracking-tight text-white">
-                    Pl@ntNet-300K Benchmark & Multi-Organ Classification
+                    Pl@ntNet-300K Benchmark &amp; Plant Morphology Classification
                   </h3>
                   <span className="px-2 py-0.5 text-[9px] font-mono uppercase font-bold rounded-sm bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                     Zenodo {plant.plantnet300k.zenodoRecordId || "5645731"}
@@ -804,11 +804,11 @@ export const PlantDossier: React.FC<PlantDossierProps> = ({
             </a>
           </div>
 
-          {/* Organ & Ambiguity Status Metrics */}
+          {/* Plant Morphology & Ambiguity Status Metrics */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
             <div className="p-3 rounded-sm bg-[#0F1412] border border-[#2D3748]">
               <span className="text-[10px] uppercase font-mono tracking-wider text-slate-400 block mb-1">
-                Detected Organ
+                Detected Plant Morphology
               </span>
               <div className="text-emerald-400 font-bold uppercase font-mono text-sm flex items-center gap-1.5">
                 <Layers className="w-3.5 h-3.5" />
@@ -818,7 +818,7 @@ export const PlantDossier: React.FC<PlantDossierProps> = ({
 
             <div className="p-3 rounded-sm bg-[#0F1412] border border-[#2D3748]">
               <span className="text-[10px] uppercase font-mono tracking-wider text-slate-400 block mb-1">
-                Organ Confidence
+                Morphology Confidence
               </span>
               <div className="text-white font-bold font-mono text-sm">
                 {Math.round(plant.plantnet300k.organConfidence * 100)}%

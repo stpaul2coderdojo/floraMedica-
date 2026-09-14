@@ -617,10 +617,10 @@ export const HerbLookupModal: React.FC<HerbLookupModalProps> = ({
                           setInspectingOrganIndex(organImages.findIndex((img) => img.organ === activeImg.organ) || 0);
                         }}
                         className="absolute bottom-2 right-2 p-1.5 bg-black/80 hover:bg-emerald-500 text-slate-300 hover:text-black rounded text-[10px] font-mono flex items-center gap-1 transition-all"
-                        title="Inspect all multi-organ photos in high resolution"
+                        title="Inspect plant morphology in high resolution"
                       >
                         <ZoomIn className="w-3.5 h-3.5" />
-                        <span className="hidden sm:inline">Inspect Organs</span>
+                        <span className="hidden sm:inline">Inspect Morphology</span>
                       </button>
 
                       {/* Provenance Tag */}
@@ -692,9 +692,9 @@ export const HerbLookupModal: React.FC<HerbLookupModalProps> = ({
                         <div className="flex items-center justify-between pb-1 text-[10px] font-mono text-slate-400">
                           <span className="flex items-center gap-1 font-bold text-emerald-400 uppercase tracking-wider">
                             <Layers className="w-3 h-3" />
-                            <span>Multi-Organ Anatomical Imagery ({organImages.length} Organs)</span>
+                            <span>Plant Morphology Imagery ({organImages.length} Views)</span>
                           </span>
-                          <span className="text-slate-500">Click organ to switch view</span>
+                          <span className="text-slate-500">Click morphology to switch view</span>
                         </div>
 
                         <div className="grid grid-cols-5 gap-1.5 sm:gap-2 pt-1">
@@ -763,7 +763,7 @@ export const HerbLookupModal: React.FC<HerbLookupModalProps> = ({
         <div className="p-3 bg-[#111614] border-t border-[#2D3748] flex items-center justify-between text-slate-400 text-xs font-mono">
           <div className="flex items-center gap-2">
             <span className="text-emerald-400 font-bold">Pl@ntNet-300K Benchmark (Zenodo 5645731)</span>
-            <span className="hidden sm:inline text-slate-500">• Multi-Organ Classifier</span>
+            <span className="hidden sm:inline text-slate-500">• Plant Morphology Classifier</span>
           </div>
           <div className="flex items-center gap-3">
             <span className="text-[11px] text-slate-500 hidden md:inline">
@@ -779,7 +779,7 @@ export const HerbLookupModal: React.FC<HerbLookupModalProps> = ({
         </div>
       </div>
 
-      {/* Deep Organ Inspector & High-Resolution Lightbox Modal */}
+      {/* Deep Plant Morphology Inspector & High-Resolution Lightbox Modal */}
       {inspectingPlant && (
         <div
           id="organ-inspector-lightbox"
@@ -801,7 +801,7 @@ export const HerbLookupModal: React.FC<HerbLookupModalProps> = ({
                     {inspectingPlant.scientificName}
                   </h4>
                   <p className="text-[10px] font-mono text-emerald-400">
-                    High-Resolution Multi-Organ Anatomical Photo Gallery ({inspectingPlant.family})
+                    High-Resolution Plant Morphology Anatomical Photo Gallery ({inspectingPlant.family})
                   </p>
                 </div>
               </div>
@@ -836,7 +836,7 @@ export const HerbLookupModal: React.FC<HerbLookupModalProps> = ({
                     {/* Organ Overlay Badge */}
                     <div className="absolute top-4 left-4 flex items-center gap-1.5 bg-black/80 backdrop-blur-md px-3 py-1 rounded border border-white/10 text-white font-mono text-xs">
                       <span>{organMeta.icon}</span>
-                      <span className="capitalize font-bold">{currentImg?.organ} Organ Class</span>
+                      <span className="capitalize font-bold">{currentImg?.organ} Morphology Class</span>
                     </div>
 
                     {/* Source attribution tag */}
@@ -850,7 +850,7 @@ export const HerbLookupModal: React.FC<HerbLookupModalProps> = ({
                     <div className="space-y-3">
                       <div>
                         <span className="text-[10px] font-mono uppercase text-emerald-400 font-bold">
-                          Organ Diagnosis
+                          Plant Morphology Diagnosis
                         </span>
                         <h5 className="text-sm font-bold text-white mt-0.5">
                           {currentImg?.title || `${currentImg?.organ} Anatomical Structure`}
@@ -867,7 +867,7 @@ export const HerbLookupModal: React.FC<HerbLookupModalProps> = ({
                       <div className="p-3 bg-[#0E1311] rounded border border-[#2D3748] space-y-2 text-xs font-mono">
                         <div className="text-emerald-400 font-bold text-[11px] uppercase tracking-wider flex items-center gap-1">
                           <Info className="w-3.5 h-3.5" />
-                          <span>Organ Morphological Characters</span>
+                          <span>Plant Morphology Characters</span>
                         </div>
                         
                         {currentImg?.organ === "leaf" && (
@@ -914,7 +914,7 @@ export const HerbLookupModal: React.FC<HerbLookupModalProps> = ({
                       {/* Organ Switcher Tabs */}
                       <div className="space-y-1.5">
                         <span className="text-[10px] font-mono text-slate-400 uppercase font-bold">
-                          Switch Anatomical Organ:
+                          Switch Plant Morphology:
                         </span>
                         <div className="grid grid-cols-5 gap-1">
                           {organImages.map((img, idx) => (

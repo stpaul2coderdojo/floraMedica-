@@ -462,7 +462,7 @@ export class PlantService {
           doi: "10.5281/zenodo.5645731",
           datasetTitle: "Pl@ntNet-300K: A Plant Image Dataset with High Label Ambiguity and a Long-Tailed Distribution",
           neuripsYear: 2021,
-          organClassificationStandard: "Standardized 6-Organ Anatomical Prior Protocol (leaf, flower, fruit, bark, habit, other)",
+          organClassificationStandard: "Standardized 6-Category Plant Morphology Prior Protocol (leaf, flower, fruit, bark, habit, other)",
         },
       },
       tags: Array.isArray(plant.tags) && plant.tags.length > 0
@@ -481,7 +481,7 @@ export class PlantService {
     datasetFilter: PlantNetDatasetType | "all" = "all"
   ): Promise<{ plant: PlantData; isOfflineResult: boolean; source: string }> {
     try {
-      // Attempt online identification via backend endpoint with Pl@ntNet-300K organ priors
+      // Attempt online identification via backend endpoint with Pl@ntNet-300K plant morphology priors
       const response = await fetch("/api/identify-plant", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -659,7 +659,7 @@ export class PlantService {
       imageSnippet: feedback.imageSnippet,
       userNotes: feedback.userNotes,
       modelFineTuningExport: {
-        prompt: `Identify the botanical specimen using Pl@ntNet-300K organ priors and high-resolution diagnostic morphology.`,
+        prompt: `Identify the botanical specimen using Pl@ntNet-300K plant morphology priors and high-resolution diagnostic morphology.`,
         expectedOutputLabel:
           feedback.userDecision === "corrected" && feedback.correctedData?.scientificName
             ? feedback.correctedData.scientificName
@@ -798,11 +798,11 @@ export class PlantService {
             {
               role: "system",
               content:
-                "You are FloraMedica taxonomic vision engine calibrated on Pl@ntNet-300K multi-organ botanical benchmarks.",
+                "You are FloraMedica taxonomic vision engine calibrated on Pl@ntNet-300K plant morphology botanical benchmarks.",
             },
             {
               role: "user",
-              content: `Analyze the provided botanical image focusing on the [${organ.toUpperCase()}] organ prior. Provide verified scientific taxon and traditional pharmacopoeia monograph.`,
+              content: `Analyze the provided botanical image focusing on the [${organ.toUpperCase()}] plant morphology prior. Provide verified scientific taxon and traditional pharmacopoeia monograph.`,
             },
             {
               role: "assistant",
@@ -831,7 +831,7 @@ export class PlantService {
       "Decision",
       "Original Scientific Name",
       "Original Family",
-      "Detected Organ",
+      "Detected Plant Morphology",
       "Original Confidence",
       "Ground Truth Scientific Name",
       "Ground Truth Family",
@@ -1067,7 +1067,7 @@ export class PlantService {
 ${toxicList.length > 0 ? `**Recorded Toxic Lookalikes:**\n` + toxicList.map(tl => `- **${tl.name}**: ${tl.distinction}`).join("\n") : "- *No immediate lethal lookalikes in standard regional records, but always verify leaf venation and stem cross-section.*"}
 
 **Diagnostic Safety Guidelines:**
-1. **Organ Cross-Check:** Examine petiole attachment, margin serration, and flower symmetry across your ${imageCount > 0 ? `${imageCount} attached image(s)` : "specimen photos"}.
+1. **Plant Morphology Cross-Check:** Examine petiole attachment, margin serration, and flower symmetry across your ${imageCount > 0 ? `${imageCount} attached image(s)` : "specimen photos"}.
 2. **Contraindications:** ${(p.medicinal.contraindications || []).join(", ") || "Avoid excessive dosage without guidance"}.
 3. **Safety Warnings:** ${(p.edibility.safetyWarnings || []).join(". ") || "Verify authentic voucher specimen."}`;
       } else if (lowerQuery.includes("siddha") || lowerQuery.includes("veeryam") || lowerQuery.includes("gunam") || lowerQuery.includes("telugu")) {
@@ -1114,7 +1114,7 @@ Always prepare using clean, authenticated plant parts dried in the shade.`;
 - **Telugu (Siddha):** ${p.teluguName || "N/A"} | **Tibetan:** ${p.tibetanName || "N/A"} | **Sanskrit:** ${p.sanskritName || "N/A"}
 
 **Multi-Image Diagnostic Reasoning:**
-${imageCount > 0 ? `Evaluated ${imageCount} multi-organ image(s) for diagnostic leaf morphology, floral anatomy, and stem characteristics.` : "Referenced authenticated voucher specimen morphology and Pl@ntNet-300K benchmark profiles."}
+${imageCount > 0 ? `Evaluated ${imageCount} botanical morphology image(s) for diagnostic leaf morphology, floral anatomy, and stem characteristics.` : "Referenced authenticated voucher specimen morphology and Pl@ntNet-300K benchmark profiles."}
 
 **Primary Medicinal Actions:**
 ${(p.medicinal.primaryActions || []).map(a => `- ${a}`).join("\n")}
@@ -1136,14 +1136,14 @@ ${(p.medicinal.primaryActions || []).map(a => `- ${a}`).join("\n")}
     } else {
       reply = `### 🌿 FloraMedica Knowledge Engine (Offline Mode)
 
-I am ready to assist you with botanical identification, Pl@ntNet-300K organ priors, Siddha / Sowa-Rigpa / Ayurvedic pharmacopoeias, and multi-image specimen analysis.
+I am ready to assist you with botanical identification, Pl@ntNet-300K plant morphology priors, Siddha / Sowa-Rigpa / Ayurvedic pharmacopoeias, and multi-image specimen analysis.
 
 ${imageCount > 0 ? `I noticed you uploaded **${imageCount} image(s)**. Select or scan a plant specimen, or ask a specific question regarding botanical features, leaf venation, toxic lookalikes, or medicinal recipes.` : "You can scan a specimen via Camera, lookup a herb by name, or upload multiple photos (leaf, flower, bark, fruit) for comprehensive morphological verification."}`;
 
       followUps = [
         "How do I identify medicinal herbs by leaf venation?",
         "What are the core diagnostic rules of Sowa-Rigpa pharmacopoeia?",
-        "Explain Pl@ntNet-300K organ priors and top-k resolution.",
+        "Explain Pl@ntNet-300K plant morphology priors and top-k resolution.",
       ];
     }
 

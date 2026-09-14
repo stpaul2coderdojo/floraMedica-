@@ -293,7 +293,7 @@ export default function App() {
                   ? "bg-emerald-500 text-black shadow-sm ring-1 ring-emerald-300"
                   : "bg-emerald-950/40 text-emerald-300 hover:text-white hover:bg-emerald-900/60 border border-emerald-500/40"
               }`}
-              title="Ask Context-Aware Multi-Organ Botanical AI"
+              title="Ask Context-Aware Plant Morphology Botanical AI"
             >
               <Bot className="w-3.5 h-3.5 text-emerald-400" />
               <span>Botanical AI Bot</span>

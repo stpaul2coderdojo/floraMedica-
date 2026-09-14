@@ -289,10 +289,10 @@ export const PlantNetDatasetsModal: React.FC<PlantNetDatasetsModalProps> = ({
                   </div>
                 </div>
 
-                {/* Supported Organs */}
+                {/* Supported Plant Morphology */}
                 <div>
                   <span className="text-[10px] uppercase font-mono tracking-wider text-slate-400 block mb-1.5">
-                    Supported PlantNet Anatomical Organs:
+                    Supported PlantNet Botanical Morphology:
                   </span>
                   <div className="flex items-center gap-1.5 flex-wrap">
                     {selectedDataset.organsSupported.map((organ) => (
@@ -305,7 +305,7 @@ export const PlantNetDatasetsModal: React.FC<PlantNetDatasetsModalProps> = ({
                         {organ === "fruit" && "🍒 Fruit"}
                         {organ === "bark" && "🪵 Bark / Stem"}
                         {organ === "habit" && "🌱 Habit (Whole)"}
-                        {organ === "other" && "🔍 Other / Organ"}
+                        {organ === "other" && "🔍 Other / Morphology"}
                       </span>
                     ))}
                   </div>
@@ -491,7 +491,7 @@ export const PlantNetDatasetsModal: React.FC<PlantNetDatasetsModalProps> = ({
               </span>
               <ul className="text-xs text-slate-300 space-y-1.5 list-disc list-inside leading-relaxed">
                 <li>
-                  <strong className="text-emerald-300">Tier 1 (Pl@ntNet-300K Benchmark Calibration):</strong> Vision Transformer and Gemini Vision multi-organ neural priors (Leaf, Flower, Fruit, Bark, Habit).
+                  <strong className="text-emerald-300">Tier 1 (Pl@ntNet-300K Benchmark Calibration):</strong> Vision Transformer and Gemini Vision plant morphology neural priors (Leaf, Flower, Fruit, Bark, Habit).
                 </li>
                 <li>
                   <strong className="text-emerald-300">Tier 2 (Zero-Latency Offline Fallback):</strong> Multi-factor botanical matching engine comparing 12 morphological attributes against the preloaded local GBIF dataset registry.
