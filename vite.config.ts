@@ -4,8 +4,12 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
+  // Use repository subpath for GitHub Pages CI deployment, and root '/' for Render / Docker / local
+  const isGitHubActions = process.env.GITHUB_ACTIONS === 'true' || process.env.GITHUB_PAGES === 'true';
+  const basePath = isGitHubActions ? '/floraMedica-/' : '/';
+
   return {
-    base: '/floraMedica-/',
+    base: basePath,
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {

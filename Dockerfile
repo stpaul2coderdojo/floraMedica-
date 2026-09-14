@@ -23,9 +23,9 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 
-# Copy package manifests and install only production dependencies
+# Copy package manifests and install only production dependencies (skip dev and optional tools like tsx)
 COPY package*.json ./
-RUN if [ -f package-lock.json ]; then npm ci --omit=dev; else npm install --omit=dev; fi
+RUN if [ -f package-lock.json ]; then npm ci --omit=dev --omit=optional --ignore-scripts; else npm install --omit=dev --omit=optional --ignore-scripts; fi
 
 # Copy compiled artifacts and static assets from builder stage
 COPY --from=builder /app/dist ./dist
