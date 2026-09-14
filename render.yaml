@@ -1,0 +1,25 @@
+# Render.com Blueprint Deployment Specification
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  # Standard Node.js Web Service
+  # Build Command: npm install && npm run build
+  # Start Command: npm run start
+  - type: web
+    name: floramedica-pro
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: PLANTNET_API_KEY
+        sync: false

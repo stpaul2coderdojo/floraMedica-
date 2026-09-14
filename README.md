@@ -128,6 +128,35 @@ gcloud run deploy floramedica-pro \
 
 ---
 
+## 🚀 Render.com Deployment Guide
+
+FloraMedica Pro can be deployed to Render via either **Native Node.js Web Service** or **Docker Web Service**.
+
+### Option A: 1-Click Render Blueprint (Recommended)
+1. In Render Dashboard, click **New +** &rarr; **Blueprint**.
+2. Connect repository `stpaul2coderdojo/floraMedica`.
+3. Render automatically reads `render.yaml` with zero configuration needed.
+
+### Option B: Node.js Web Service (Manual)
+1. In Render Dashboard, select **New Web Service** &rarr; **Build and deploy from a Git repository**.
+2. Set configuration:
+   - **Runtime:** `Node`
+   - **Build Command:** `npm install && npm run build`
+   - **Start Command:** `npm run start` (or `node dist/server.cjs`)
+   - **Plan:** Free or Starter
+3. Under **Environment Variables**:
+   - `PORT`: `3000`
+   - `NODE_ENV`: `production`
+   - `GEMINI_API_KEY`: *(Your Google AI Studio API key)*
+   - `PLANTNET_API_KEY`: *(Optional Pl@ntNet v2 key)*
+
+### Option C: Docker Web Service on Render
+1. Select **New Web Service** &rarr; **Docker**.
+2. Render detects the root multi-stage `Dockerfile`.
+3. The Docker container exposes port `3000` and serves the optimized `dist/server.cjs` backend bundle alongside the compiled Vite SPA.
+
+---
+
 ## 📜 Citation
 
 ```bibtex

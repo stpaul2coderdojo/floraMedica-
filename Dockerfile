@@ -6,8 +6,8 @@ WORKDIR /app
 # Copy dependency specifications
 COPY package*.json ./
 
-# Install all dependencies (including devDependencies needed for build)
-RUN npm ci
+# Install all dependencies required for the build (supports both lockfile and fresh installs)
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
 # Copy the complete source code
 COPY . .
@@ -25,13 +25,12 @@ ENV PORT=3000
 
 # Copy package manifests and install only production dependencies
 COPY package*.json ./
-RUN npm ci --only=production
+RUN if [ -f package-lock.json ]; then npm ci --omit=dev; else npm install --omit=dev; fi
 
-# Copy compiled artifacts from builder stage
+# Copy compiled artifacts and static assets from builder stage
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/docs ./docs
-COPY --from=builder /app/doc ./doc
+COPY --from=builder /app/floraMedica.stpaul2coderdojo.github.io ./floraMedica.stpaul2coderdojo.github.io
 
 # Container listens on port 3000
 EXPOSE 3000
